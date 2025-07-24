@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU Scheduling Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>CPU Scheduling Simulator</h1>
+
+        <div class="input-section">
+            <fieldset>
+                <legend>Process Input Method</legend>
+                <label><input type="radio" name="inputMethod" value="manual" checked> Manual Input</label>
+                <label><input type="radio" name="inputMethod" value="random"> Random Generator</label>
+            </fieldset>
+
+            <div id="manualInput" class="input-method-content">
+                <h2>Manual Process Details</h2>
+                <label for="numProcessesManual">Number of Processes:</label>
+                <input type="number" id="numProcessesManual" min="1" value="1">
+                <table id="processTable">
+                    <thead>
+                        <tr>
+                            <th>Process ID</th>
+                            <th>Arrival Time</th>
+                            <th>Burst Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+
+            <div id="randomInput" class="input-method-content hidden">
+                <h2>Random Process Generation</h2>
+                <label for="numProcessesRandom">Number of Processes:</label>
+                <input type="number" id="numProcessesRandom" min="1" value="5">
+                <table id="randomProcessPreviewTable" class="hidden">
+                    <thead>
+                        <tr>
+                            <th>Process ID</th>
+                            <th>Arrival Time</th>
+                            <th>Burst Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+
+            <fieldset class="algorithm-selection">
+                <legend>Select Scheduling Algorithm</legend>
+                <select id="algorithmSelect">
+                    <option value="FCFS">First-Come, First-Served (FCFS)</option>
+                    <option value="SJF">Shortest Job First (SJF)</option>
+                    <option value="SRTF">Shortest Remaining Time First (SRTF)</option>
+                    <option value="RR">Round Robin (RR)</option>
+                    <option value="MLFQ">Multilevel Feedback Queue (MLFQ)</option>
+                </select>
+            </fieldset>
+
+            
+            <div id="rrQuantumInput" class="quantum-input hidden">
+                <label for="rrTimeQuantum">Round Robin Time Quantum:</label>
+                <input type="number" id="rrTimeQuantum" min="1" value="2">
+            </div>
+
+            <div id="mlfqQuantumInput" class="quantum-input hidden">
+                <h3>MLFQ Quantum Settings</h3>
+                <label for="mlfqQ0Quantum">Q0 Time Quantum (RR):</label>
+                <input type="number" id="mlfqQ0Quantum" min="1" value="2"><br>
+                <label for="mlfqQ1Quantum">Q1 Time Quantum (RR):</label>
+                <input type="number" id="mlfqQ1Quantum" min="1" value="4"><br>
+                <label for="mlfqQ2Quantum">Q2 Time Quantum (RR):</label>
+                <input type="number" id="mlfqQ2Quantum" min="1" value="8"><br>
+                <label for="mlfqQ3Type">Q3 Scheduling:</label>
+                <select id="mlfqQ3Type">
+                    <option value="FCFS">FCFS</option>
+                    <option value="RR">Round Robin</option>
+                </select>
+                <div id="mlfqQ3QuantumContainer" class="hidden">
+                    <label for="mlfqQ3Quantum">Q3 Time Quantum (RR):</label>
+                    <input type="number" id="mlfqQ3Quantum" min="1" value="16">
+                </div>
+            </div>
+
+            <!-- NEW: Context Switch Delay Input -->
+            <div class="form-group">
+                <label for="contextSwitchTime">Context Switch Delay (ms):</label>
+                <input type="number" id="contextSwitchTime" min="0" value="0">
+            </div>
+
+            <button id="runSimulation">Run Simulation</button>
+
+            <div id="stepControls" class="hidden">
+                <h2>Execution Controls</h2>
+                <div class="control-buttons">
+                    <button id="prevStep">Previous Step</button>
+                    <button id="nextStep">Next Step</button>
+                    <button id="runAll">Run All</button>
+                </div>
+                <p>Current Time: <span id="currentTimeDisplay">0</span></p>
+                <p>Explanation: <span id="explanationDisplay">Simulation not started.</span></p>
+            </div>
+        </div>
+
+        <div class="output-section">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2>Gantt Chart</h2>
+                <button id="exportResults" class="hidden">Export Results</button>
+            </div>
+            <pre id="ganttChart" class="gantt-chart"></pre>
+            <div id="mlfqLegend" class="hidden">
+                <h3>MLFQ Queue Legend:</h3>
+                <p>Q0: Highest Priority, Q3: Lowest Priority</p>
+            </div>
+
+            <h2>Process Details (Current State)</h2>
+            <table id="processStateTable">
+                <thead>
+                    <tr>
+                        <th>Process ID</th>
+                        <th>Arrival Time</th>
+                        <th>Burst Time</th>
+                        <th>Remaining Burst</th>
+                        <th>Current Queue</th>
+                        <th>Response Time Set?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+
+            <h2>Final Process Metrics</h2>
+            <table id="metricsTable">
+                <thead>
+                    <tr>
+                        <th>Process ID</th>
+                        <th>Arrival Time</th>
+                        <th>Burst Time</th>
+                        <th>Completion Time</th>
+                        <th>Turnaround Time</th>
+                        <th>Response Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+
+            <h2>Average Metrics</h2>
+            <p>Average Turnaround Time: <span id="avgTurnaroundTime">N/A</span></p>
+            <p>Average Response Time: <span id="avgResponseTime">N/A</span></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,483 @@
+/* Custom properties for colors - easier to manage and change */
+:root {
+    --bg-dark: #1a1a2e; /* Dark background base */
+    --bg-dark-accent: #16213e; /* Slightly lighter dark for containers */
+    --text-light: #e0e0e0; /* Light gray for general text */
+    --text-accent: #0f4c75; /* Dark blue for primary text/headings */
+    --cyber-blue: #007bff; /* Standard blue, adjust if needed */
+    --cyber-green: #00ffc8; /* Electric green */
+    --cyber-purple: #9d00ff; /* Vibrant purple */
+    --cyber-red: #ff007f; /* Magenta/Red for alerts */
+    --border-dark: #3a3a5a; /* Darker border */
+    --gradient-start: #2a0050; /* Deep purple for gradient start */
+    --gradient-end: #000030; /* Very dark blue for gradient end */
+
+    /* Gantt Chart specific colors */
+    --gantt-idle-color: #4a4a4a; /* Darker gray for idle CPU */
+    --gantt-context-switch-color: #ffabab; /* Light red for context switch */
+}
+
+
+/* General Body and Container Styling */
+body {
+    font-family: 'Space Mono', 'Fira Code', 'Roboto Mono', monospace, sans-serif; /* Monospace or techy font */
+    margin: 0;
+    padding: 0;
+    /* Gradient background for the entire body */
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    background-attachment: fixed; /* Keep gradient fixed on scroll */
+    color: var(--text-light); /* Light text on dark background */
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh; /* Ensure body takes full viewport height */
+}
+
+.container {
+    background-color: var(--bg-dark-accent); /* Darker background for main content */
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* Stronger, diffused shadow */
+    padding: 35px;
+    margin: 30px auto; /* Centered with margin */
+    max-width: 1200px;
+    width: 95%; /* Responsive width */
+    box-sizing: border-box;
+    border: 1px solid var(--border-dark); /* Subtle border */
+}
+
+h1, h2, h3 {
+    color: var(--cyber-green); /* Electric green for headings */
+    text-shadow: 0 0 8px rgba(0, 255, 200, 0.4); /* Glow effect */
+    margin-top: none;
+    margin-bottom: 25px;
+    text-align: center;
+    letter-spacing: 1.5px; /* Spaced out letters */
+}
+
+/* --- Section Styling --- */
+.input-section,
+.simulation-control-section,
+.output-section { /* Renamed from results-section, metrics-section for consistency */
+    padding: 25px;
+    margin-bottom: 30px;
+    border: 1px solid var(--border-dark);
+    border-radius: 10px;
+    background-color: var(--bg-dark); /* Darker section background */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Input Method Radios */
+fieldset { /* Applied to fieldset directly */
+    border: 1px solid var(--border-dark);
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    background-color: var(--bg-dark-accent);
+}
+
+fieldset legend {
+    color: var(--cyber-blue);
+    font-weight: bold;
+    padding: 0 10px;
+    font-size: 1.1em;
+}
+
+.input-method-content {
+    margin-top: 20px;
+}
+
+.input-method-content h2 {
+    text-align: left;
+    font-size: 1.3em;
+    margin-bottom: 15px;
+}
+
+.input-method-content label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Input Fields and Selects */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--text-light);
+    font-size: 1.05em;
+}
+
+input[type="number"],
+input[type="text"],
+select {
+    width: calc(100% - 24px); /* Adjust for padding and border */
+    padding: 12px;
+    margin-bottom: 12px; /* Add margin-bottom for spacing between inputs */
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    font-size: 1em;
+    color: var(--cyber-green); /* Input text color */
+    background-color: #1a1a2e; /* Dark input background */
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    caret-color: var(--cyber-purple); /* Cursor color */
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus,
+select:focus {
+    border-color: var(--cyber-purple); /* Purple accent on focus */
+    box-shadow: 0 0 0 3px rgba(157, 0, 255, 0.3), 0 0 10px rgba(157, 0, 255, 0.2); /* Glow effect */
+    outline: none;
+}
+
+/* Process Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    background-color: var(--bg-dark-accent);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+table th, table td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-dark);
+    color: var(--text-light); /* Light text in table cells */
+}
+
+table th {
+    background-color: #2a2a4a; /* Slightly lighter dark for header */
+    color: var(--cyber-green); /* Green header text */
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 0.8px;
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+table tbody tr:hover {
+    background-color: #22223a; /* Darker hover effect */
+}
+
+table tbody tr.running-process {
+    background-color: #004d40; /* Dark teal for running process */
+    font-weight: bold;
+    color: var(--cyber-green);
+    text-shadow: 0 0 5px rgba(0, 255, 200, 0.4);
+}
+
+/* Buttons - Advanced Gradient Outline */
+button {
+    background-color: var(--cyber-blue); /* Default solid background for safety */
+    color: white;
+    padding: 10px 18px;
+    border: none; /* Remove default border */
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+    margin-right: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative; /* For the pseudo-element outline */
+    z-index: 1; /* Ensure button content is above outline */
+    overflow: hidden; /* Hide overflow of content, if any */
+    display: inline-block; /* Ensure it respects margin-right */
+}
+
+/* Gradient border effect for buttons */
+button::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--cyber-blue), var(--cyber-purple), var(--cyber-green)); /* Dynamic gradient */
+    z-index: -1; /* Behind the button content */
+    border-radius: 10px; /* Slightly larger than button for border effect */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, filter 0.3s ease-in-out;
+    filter: blur(5px); /* Soft glow */
+}
+
+button:hover {
+    background-color: #0056b3; /* Slightly darker solid on hover, can also be a subtle gradient */
+    transform: translateY(-3px); /* More pronounced lift */
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3); /* Stronger shadow */
+}
+
+button:hover::before {
+    opacity: 1; /* Show gradient outline on hover */
+    filter: blur(2px); /* Less blur for sharper outline on hover */
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2);
+}
+
+button:disabled {
+    background-color: #333;
+    color: #888;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+button:disabled::before {
+    opacity: 0; /* No gradient outline when disabled */
+}
+
+#runSimulation {
+    margin-top: 30px;
+    margin-bottom: 20px; /* Space before step controls */
+    display: block;
+    width: fit-content; /* Adjust width to content */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Simulation Controls --- */
+#stepControls { /* Renamed from .step-controls */
+    margin-top: 30px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+#stepControls .control-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+#stepControls p {
+    margin-bottom: 10px;
+}
+
+.current-time-display, .explanation-display {
+    text-align: center;
+    font-size: 1.3em;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: var(--cyber-green); /* Electric green for time */
+    text-shadow: 0 0 5px rgba(0, 255, 200, 0.3);
+}
+
+.explanation-display {
+    font-size: 1.1em;
+    font-style: italic;
+    color: var(--text-light);
+    min-height: 25px;
+    line-height: 1.4;
+    padding: 5px 10px;
+    background-color: #22223a; /* Dark background for explanation */
+    border-radius: 5px;
+    border: 1px dashed var(--border-dark);
+}
+
+
+/* --- Gantt Chart --- */
+.output-section #ganttChart { /* Targeted the specific pre element */
+    background-color: #0f1a2a; /* Even darker blue for Gantt container */
+    border-radius: 10px;
+    padding: 20px;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    margin-top: 30px;
+    min-height: 120px; /* More space */
+    position: relative;
+    border: 1px solid var(--border-dark);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5); /* Inner shadow */
+    display: flex; /* Make it a flex container for blocks and timeline */
+    flex-direction: column; /* Stack blocks and timeline vertically */
+    align-items: flex-start; /* Align content to the start */
+    font-family: 'Fira Code', 'Roboto Mono', monospace; /* Monospace for Gantt clarity */
+}
+
+.gantt-row {
+    display: flex;
+    height: 45px; /* Taller process blocks */
+    align-items: center;
+    width: fit-content; /* Allow row to expand horizontally */
+    min-width: 100%; /* Ensure it takes at least 100% of parent width */
+}
+
+.gantt-block {
+    background-color: #3a3a5a; /* Default darker background for blocks */
+    color: white;
+    font-size: 0.9em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    box-sizing: border-box;
+    min-width: 30px; /* Minimum width for very short blocks */
+    height: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: 0 0 3px rgba(0,0,0,0.5); /* Subtle shadow for text */
+    flex-shrink: 0; /* Prevent blocks from shrinking */
+}
+
+.gantt-Idle {
+    background-color: var(--gantt-idle-color);
+    color: #cccccc;
+    font-style: italic;
+}
+
+.gantt-context-switch {
+    background-color: var(--gantt-context-switch-color);
+    color: #8a0000;
+    font-weight: bold;
+    border: 1px solid #ff7b7b;
+}
+
+/* Time markers for Gantt chart */
+.gantt-time-line {
+    position: relative; /* Relative to its flex parent */
+    width: 100%; /* Take full width of its flex parent */
+    height: 35px;
+    white-space: nowrap;
+    border-top: 1px solid var(--border-dark);
+    padding-top: 5px;
+    margin-top: 5px; /* Space between blocks and timeline */
+}
+
+.time-marker {
+    position: absolute;
+    bottom: 8px;
+    font-size: 0.85em;
+    color: var(--cyber-green); /* Green time markers */
+    transform: translateX(-50%); /* Center marker on its left edge */
+    border-left: 1px solid rgba(0, 255, 200, 0.5); /* Glowing green line */
+    height: 12px;
+    padding-top: 15px; /* Push number up from line */
+    text-shadow: 0 0 5px rgba(0, 255, 200, 0.5);
+}
+
+
+/* MLFQ Queue Colors (for Gantt and Legend) */
+.mlfq-q0 { background-color: #00b386; } 
+.mlfq-q1 { background-color: #e6b800; } 
+.mlfq-q2 { background-color: #cc4d00; } 
+.mlfq-q3 { background-color: #b3005c; } 
+
+/* MLFQ Legend */
+.mlfq-legend {
+    margin-top: 25px;
+    padding: 20px;
+    border: 1px solid var(--border-dark);
+    border-radius: 10px;
+    background-color: var(--bg-dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mlfq-legend h3 {
+    text-align: left;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    color: var(--cyber-green);
+    text-shadow: none; 
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 0.95em;
+    color: var(--text-light);
+}
+
+.legend-color-box {
+    width: 25px;
+    height: 25px;
+    border-radius: 6px;
+    margin-right: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 5px rgba(0,0,0,0.3) inset;
+}
+
+/* Hidden Utility Class */
+.hidden {
+    display: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    .container {
+        padding: 20px;
+        margin: 20px auto;
+    }
+    h1, h2, h3 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+    fieldset {
+        padding: 10px 15px;
+    }
+    fieldset legend {
+        font-size: 1em;
+    }
+    .input-method-selection label { 
+        justify-content: center;
+        width: 100%;
+        padding: 10px 15px;
+    }
+    button {
+        padding: 10px 15px;
+        font-size: 0.9em;
+        margin-right: 5px;
+        margin-bottom: 10px; /* For stacked buttons */
+        letter-spacing: 0.5px;
+    }
+    .control-buttons { /* Specific to step controls */
+        flex-wrap: wrap; 
+        gap: 10px;
+    }
+    table th, table td {
+        padding: 8px 10px;
+        font-size: 0.8em;
+    }
+    .current-time-display, .explanation-display {
+        font-size: 1em;
+        margin-bottom: 10px;
+    }
+    .gantt-block {
+        height: 30px;
+        min-width: 15px;
+        font-size: 0.7em;
+    }
+    .time-marker {
+        font-size: 0.7em;
+        height: 10px;
+        padding-top: 10px;
+    }
+    .form-group label {
+        font-size: 0.9em;
+        margin-bottom: 8px;
+    }
+    input[type="number"],
+    input[type="text"],
+    select {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+
+}
